@@ -89,18 +89,18 @@ a, a:visited{
 }
 #popOutBtn {
   /*display: none; /* Hidden by default */
-  position: fixed; /* Fixed/sticky position */
-  top: 15px; /* Place the button at the bottom of the page */
-  right: 15px; /* Place the button 30px from the right */
+  position: absolute; /* Fixed/sticky position */
+  top: 1vw; /* Place the button at the bottom of the page */
+  right: 1vw; /* Place the button 30px from the right */
   z-index: 99; /* Make sure it does not overlap */
   border: none; /* Remove borders */
   outline: none; /* Remove outline */
   background-color: #77e; /* Set a background color */
   color: white; /* Text color */
   cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 15px; /* Some padding */
+  padding: 12px; /* Some padding */
   border-radius: 10px; /* Rounded corners */
-  font-size: 18px; /* Increase font size */
+  font-size: 16px; /* Increase font size */
 }
 
 #popOutBtn:hover {
@@ -195,7 +195,13 @@ function popOut()
 	open(window.location.href.split('?')[0]+"?poppedOut=1", document.title, params);
 }
 $(document).ready(function(){
-	if (getUrlParameter("poppedOut")=="1") $("#popOutBtn").hide();
+	if (getUrlParameter("poppedOut")=="1" || ( navigator.userAgent.match(/Android/i)
+ || navigator.userAgent.match(/webOS/i)
+ || navigator.userAgent.match(/iPhone/i)
+ || navigator.userAgent.match(/iPad/i)
+ || navigator.userAgent.match(/iPod/i)
+ || navigator.userAgent.match(/BlackBerry/i)
+ || navigator.userAgent.match(/Windows Phone/i))) $("#popOutBtn").hide();
 	$(this).scrollTop(0);
 });
 </script>
