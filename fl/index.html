@@ -126,10 +126,10 @@ a, a:visited{
 }
 #mycontainer
 {
-	position:absolute;
-	top:0;
-	left:0;
-	width:100%;
+	//position:absolute;
+	//top:0;
+	//left:0;
+	//width:100%;
 	//height:calc(100vh - 35px);
 	//overflow-y: scroll;
 }
@@ -149,6 +149,8 @@ body
 	align-items:right;
 z-index:99; /* Make sure it does not overlap */
 	position: fixed; /* Fixed/sticky position */
+	   -webkit-transform: translateZ(0);
+
 	display:flex;
   flex-direction: row-reverse;
     //justify-content: space-around;
