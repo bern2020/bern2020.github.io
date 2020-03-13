@@ -1,0 +1,27 @@
+<style type="text/css">
+a:hover {
+    background-color: yellow;
+}
+body
+{
+	max-width: 900px !important;
+}
+body > table:nth-of-type(2) > tbody > tr > td, body > table:nth-of-type(3) > tbody > tr > td, body > table:nth-of-type(2) > tbody > tr > td > table td:nth-of-type(2)
+{
+	width:unset !important;
+	max-width: 800px;
+}
+body > table:first-of-type td
+{
+	max-width: 700px !important;
+	width:90vw !important;
+}
+body > table:first-of-type td *, table.c6 td *
+{
+	font-size:1em !important;
+}
+body > table:first-of-type, table.c6
+{
+	font-size:large !important;
+}
+</style>
