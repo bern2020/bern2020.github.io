@@ -189,7 +189,7 @@ function popOut()
 {
 	var width   = parseInt(screen.width / 3);
 	var left   = screen.width - width - 30;
-	var height = screen.height + window.innerHeight - window.outerHeight - 30;
+	var height = screen.height + window.innerHeight - window.outerHeight - 50;
 	let params = 'scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,width='+width+',height='+height+',left='+left+',top=30';
 
 	open(window.location.href.split('?')[0]+"?poppedOut=1", document.title, params);
