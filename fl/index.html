@@ -138,7 +138,8 @@ $("#surveyContainer").Survey({
 	<!-- SCRIPT ENDS HERE ========================================================================================== -->
 	
 	<script>
-	
+    var oldtime = new Date().getTime();
+
 	survey
     .onAfterRenderQuestion
     .add(function (survey, options) {
@@ -162,9 +163,16 @@ function scrollFunction() {
 
 // When the user clicks on the button, scroll to the top of the document
 function topFunction() {
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-	survey.clear(true, true);
+	var newtime = new Date().getTime();
+	if (newtime - oldtime > 1000*60*5)
+	{
+		location.reload();
+	}
+	else {
+		document.body.scrollTop = 0; // For Safari
+		document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+		survey.clear(true, true);
+	}
 }
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
