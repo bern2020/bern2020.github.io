@@ -9,9 +9,23 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link href="https://surveyjs.azureedge.net/1.5.15/survey.css" type="text/css" rel="stylesheet" />
 <script src="https://surveyjs.azureedge.net/1.5.15/survey.jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/vast-engineering/jquery-popup-overlay@2/jquery.popupoverlay.min.js"></script>
 
 
 <style>
+h2
+{
+	padding:0;
+	margin:0;
+}
+div[name="Survey Title"]
+{
+	padding:5px !important;
+	margin:0 !important;
+	color:#333;
+	background-color:#f5f5f5;
+	text-align:center;
+}
 a, a:visited{
   color:blue;
 }
@@ -69,17 +83,14 @@ a, a:visited{
 }
 #myBtn {
   /*display: none; /* Hidden by default */
-  position: fixed; /* Fixed/sticky position */
-  bottom: 0.6vw; /* Place the button at the bottom of the page */
-  right: 0.6vw; /* Place the button 30px from the right */
-  z-index: 99; /* Make sure it does not overlap */
+  
+  //right: 0.6vw; /* Place the button 30px from the right */
+  
   border: none; /* Remove borders */
   outline: none; /* Remove outline */
   background-color: red; /* Set a background color */
   color: white; /* Text color */
   cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 15px; /* Some padding */
-  border-radius: 10px; /* Rounded corners */
   font-size: 18px; /* Increase font size */
 }
 
@@ -109,25 +120,166 @@ a, a:visited{
 #popOutBtn:hover {
   background-color: #555; /* Add a dark-grey background on hover */
 }
+#spacer
+{
+	//background-color:blue;
+}
+#mycontainer
+{
+	//position:absolute;
+	//top:0;
+	//left:0;
+	//width:100%;
+	//height:calc(100vh - 35px);
+	//overflow-y: scroll;
+}
+body
+{
+	//position:absolute;
+	top:0;
+	left:0;
+	padding:0;
+	margin:0;
+	//width:100%;
+	//height:calc(100vh - 35px);
+	//overflow-y: scroll;
+}
+#myfooter
+{
+	align-items:right;
+z-index:99; /* Make sure it does not overlap */
+	position: fixed; /* Fixed/sticky position */
+	display:flex;
+  flex-direction: row-reverse;
+    //justify-content: space-around;
+	position:fixed;
+	bottom:0;
+	width:100%;
+	height:50px;
+	background-color:#ffc;
+	border-top:2px solid #fb5;
+}
+#myfooter button, .mybutton
+{
+  align-self: center;
 
+	border-radius: 5px; /* Rounded corners */
+	//padding: 0.75vw; /* Some padding */
+	height:35px;
+	//margin-left:1vw;
+	margin-right:1vw;
+	font-size:15px;
+	padding-left:10px;
+	padding-right:10px;
+	//bottom: 5px; /* Place the button at the bottom of the page */
+}
+a.mybutton
+{
+line-height:32px;
+height:32px;
+	display:inline-block;
+	text-decoration:none;
+	color:black;
+	border-radius: 5px; /* Rounded corners */
+	border:2px solid #272;
+	font-size:12px;
+}
+#faqBtn
+{
+	background-color:#cfc !important;
+}
+#dispositioncontainer
+{
+	margin-top:25px;
+	padding:10px;
+	background:white;
+}
+
+#disposition td {
+    padding: 2px;
+    font-size: 12px
+;
+}
+#disposition p {
+    font-weight: bold;
+}
+#disposition td:first-of-type {
+    width: auto;
+}
+#disposition thead tr, #disposition thead tr th{
+    background: #3C78D8;
+}
+#disposition thead th
+{
+    font-size: 15px;
+    font-weight: bold;
+    color: #FFFFFF;
+	text-align:center;
+}
+#disposition tr:nth-child(even) {
+    background: #D0E4F5 ;
+}
+#disposition tr {
+    background-color: #F8FFF7;
+}
+.dispositiondiv_close {
+	position: absolute;
+	top:10px;
+	right:0px;
+	width: 50px;
+	height: 50px;
+	border: 2px solid #eef5df;
+	background-color: #f77;
+	border-radius: 25%;
+	}
+.dispositiondiv_close::before, .dispositiondiv_close::after {
+	position: absolute;
+	top: 20px;
+	left: 8px;
+	width: 30px;
+	height: 5px;
+	content: "";
+	background-color: white;
+	display: block;
+	}
+.dispositiondiv_close::before {
+	-ms-transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	}
+.dispositiondiv_close::after {
+	-ms-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+	}
+.dispositiondiv_close:hover { cursor: pointer; }
+.dispositiondiv_close:hover { background-color: red; }
 </style>
 </head>
 <body style="font-family:Verdana;">
-<button onclick="topFunction()" id="myBtn" title="START OVER">START OVER</button>
 <button onclick="popOut()" id="popOutBtn" title="START OVER">POP OUT</button>
 
 	<div id="mycontainer">
-		<main role="main" class="main">
+		<div role="main" class="main">
 			<div id="surveyContainer"></div>
-		</main>
-		<div id="spacer">
+		</div>
+		<div id="spacer"></div>
+		<div id="dispositiondiv">
+			<div id="dispositioncontainer"><button class="dispositiondiv_close"></button>
+			<table id="disposition"><thead><tr class="c19"><th class="c8" colspan="1" rowspan="1"><p class="c20"><span class="c30">DISPOSITION</span></p></th><th class="c6 c35" colspan="1" rowspan="1"><p class="c20"><span class="c30">EXAMPLE</span></p></th></tr></thead><tbody><tr class="c28"><td class="c5" colspan="1" rowspan="1"><p class="c11 c18"><span class="c2 c16">DO_NOT_CALL</span></p><p class="c4 c18"><span class="c25 c2">&nbsp;</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0 start"><li class="c12 c7"><span class="c3 c2">Machine answers and says “Do not call this number.”</span></li><li class="c4 c7"><span class="c3 c2">Someone pranks or trolls you.</span></li><li class="c4 c7"><span class="c3 c2">“Take me off your list”</span></li><li class="c4 c7"><span class="c3 c2">“I’m not interested, goodbye”</span></li></ul></td></tr><tr class="c28"><td class="c5" colspan="1" rowspan="1"><p class="c11 c18"><span class="c16 c2">OTHER</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c3 c2">Voter is deceased</span></li><li class="c4 c7"><span class="c3 c2">Any other option not covered in the guide</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c18 c26"><span class="c25 c2">WRONG NUMBER</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_9t1r0w9gs2qw-0 start"><li class="c17 c21"><span class="c3 c2">Voicemail, definitely not the person</span></li><li class="c17 c21"><span class="c3 c2">Fax Machine</span></li><li class="c17 c21"><span class="c2">“</span><span class="c3 c2">You have the wrong number.”</span></li><li class="c17 c4"><span class="c3 c2">You contact a business and not the correct person</span></li><li class="c17 c4"><span class="c3 c2">You hear “This Phone Number has been disconnected”</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">BOT</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c12 c7"><span class="c3 c2">A bot (recording) answers</span></li><li class="c4 c7"><span class="c2">A</span><span class="c32 c2">&nbsp;“bot detection”</span><span class="c2">&nbsp;service prompts you to enter numbers to verify you are a person and the call does not go through after entering numbers</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">OTHER LANGUAGE</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_ug3tt69x0n0p-0 start"><li class="c4 c17"><span class="c3 c2">Caller does not speak English</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">CALL DISCONNECTED</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c7 c12"><span class="c3 c2">Hang up before you know who it is</span></li><li class="c12 c7"><span class="c3 c2">Greeted by a generic voicemail response (DO NOT LEAVE A VOICEMAIL)</span></li><li class="c4 c7"><span class="c3 c2">The dialer just keeps ringing and no one answers</span></li><li class="c4 c7"><span class="c3 c2">Person hangs up after you say “I’m a volunteer with the Bernie campaign”</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">NOT HOME/BUSY</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c11 c7"><span class="c2 c3">“Person is not home right now.”</span></li></ul><ul class="c1 lst-kix_k72tymoz2ww5-1 start"><li class="c11 c15"><span class="c2 c14">or “Bernard is busy right now.”</span></li><li class="c11 c15"><span class="c2">or “Bernard can’t talk right now.”</span></li></ul><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c2">Person says: </span><span class="c3 c2">“Hi, this is me. I’m busy right now.”</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">MOVED</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c11 c7"><span class="c3 c2">“Person doesn’t live here anymore/moved.”</span></li><li class="c7 c11"><span class="c3 c2">or "Person is away at college."</span></li><li class="c4 c7"><span class="c3 c2">Person says “I moved to another state”</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">5- Will Not Support Bernie</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c12 c7"><span class="c3 c2">“I would never vote for Bernie”</span></li><li class="c4 c7"><span class="c3 c2">“I’m voting for the Opponent”</span></li></ul></td></tr><tr class="c13"><td class="c5" colspan="1" rowspan="1"><p class="c4 c18"><span class="c2 c25">4 - Unlikely to Support Bernie</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c3 c2">“I’m probably for voting for the Opponent”</span></li></ul></td></tr><tr class="c31"><td class="c5" colspan="1" rowspan="1"><p class="c4 c18"><span class="c3 c2">3- Undecided</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c3 c2">“I still haven’t decided” </span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">2- Will Likely Support Bernie</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c3 c2">“I’ll probably vote for Bernie”</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">1- Strong Bernie Supporter</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c3 c2">“I am voting for Bernie!”</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">Already Voted</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c3 c2">Select this regardless of which candidate they voted for. </span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">Not Voting</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c3 c2">“I am not eligible to vote” </span></li><li class="c4 c7"><span class="c3 c2">“I will be out of town that day”</span></li><li class="c4 c7"><span class="c3 c2">“I don't vote in primaries”</span></li></ul></td></tr><tr class="c9"><td class="c5" colspan="1" rowspan="1"><p class="c4"><span class="c3 c2">Answering Machine</span></p></td><td class="c6" colspan="1" rowspan="1"><ul class="c1 lst-kix_k72tymoz2ww5-0"><li class="c4 c7"><span class="c3 c2">Voicemail prompt has person's name</span></li></ul></td></tr></tbody></table>
+			</div>
+		</div>
+		<div id="myfooter">
+			<button onclick="topFunction()" id="myBtn" title="START OVER">RESET</button>
+			<button class="dispositiondiv_open" title="Dispositions">Dispositions</button>
+			<a class="mybutton" id="faqBtn" title="FAQs" href="https://b2020.me/FL-FAQ" value="FAQ" target="_blank" >Florida FAQs</a>
 		</div>
 	</div>
 
 <!-- SCRIPT GOES HERE ========================================================================================== -->
 <script type="text/javascript">
 
-var surveyJSON = {pages:[{name:"Florida CallHub",elements:[{type:"panel",name:"StartPanel",elements:[{type:"html",name:"Start",html:"<div class=\"myprompt\">“Hi, is {first_name} available?\"<br/>\n...<br/>\nHi {first_name} this is [your name], a volunteer with the Bernie Sanders campaign. \n<br/>\nBernie is running for president to make our economy and our government work for all of us, not just the wealthy few. Are you in for Bernie?”\n</div>"},{type:"radiogroup",name:"support",width:"100%",titleLocation:"hidden",choices:[{value:"supporter",text:"Strong / Lean Supporter"},{value:"undecided",text:"Undecided / Leaning Other"},{value:"nonsupporter",text:"Definitely OTHER Candidate / Moved / Not Home / Busy / Wrong Number"}]}]},{type:"html",name:"nonsupporter",visibleIf:"{support} = 'nonsupporter'",html:"<div class=\"myprompt\">“Alright, thanks for sharing where you're at with me. Have a great day!”\n</div>"},{type:"panel",name:"undecided",elements:[{type:"html",name:"undecidedprompt",html:"<div class=\"myprompt\">Thanks so much for sharing that with me! I hear that you're still making up your mind. I’m making calls for Bernie--\n[TELL YOUR PERSONAL STORY OF WHAT A BERNIE PRESIDENCY WOULD MEAN FOR YOU AND YOUR COMMUNITY].<br/><br/>\nAnd that’s why I support Bernie. I’m curious, what’s something affecting your community or your family right now that you wish a candidate would stand up for?<br/><br/>\n[LISTEN]<br/><br/>\nThank you so much for sharing. This race for the Democratic nomination has turned into a two-person race between Bernie Sanders and Joe Biden. As a voter in Florida, you have the opportunity to shape history by nominating Bernie Sanders to defeat Donald Trump.<br/><br/>\nJoe Biden’s record of supporting bad trade deals, voting for the Iraq War, and efforts to cut social security leaves him vulnerable to Trump's attacks and will not inspire the voter turnout we need to win the White House. On the other hand, Bernie’s record and agenda makes him best positioned to defeat Trump and create a government that represents all people -- not just the billionaires. In poll after poll Bernie beats trump in key battleground states across the country.<br/><br/>\nKnowing this, do you think you will support Bernie in the primary on March 17th?\n</div>"},{type:"radiogroup",name:"support2",visible:false,visibleIf:"{support} = 'undecided'",width:"100%",titleLocation:"hidden",choices:[{value:"yes",text:"YES !"},{value:"no",text:"NO"}],colCount:2}],visible:false,visibleIf:"{support} = 'undecided'"},{type:"panel",name:"nonsupporter2panel",elements:[{type:"html",name:"nonsupporter2",visibleIf:"{support2} = 'no'",html:"<div class=\"myprompt\">“Thank you for your time! Have a great day!”\n</div>"}],visible:false,visibleIf:"{support2} = 'no'"},{type:"panel",name:"supporterpanel",elements:[{type:"html",name:"earlyprompt",html:"<div class=\"myprompt\">Great, I’m so glad to hear that! In Florida, early voting has already started and runs until Saturday, March 14th. Given that you’re a supporter of Bernie’s, can we count on you to cast your ballot early for Senator Sanders by March 14th?</div>"},{type:"radiogroup",name:"earlychoice1",visible:false,visibleIf:"{support} = 'supporter' or {support2} = 'yes'",width:"100%",titleLocation:"hidden",choices:[{value:"yes",text:"YES !"},{value:"no",text:"NO"}],colCount:2}],visible:false,visibleIf:"{support} = 'supporter' or {support2} = 'yes'"},{type:"panel",name:"earlyno",elements:[{type:"html",name:"earlyvotingwhynot",html:"<div class=\"myprompt\">Oh. Why not? [Get answer]. Voting is the first step to electing Bernie as our next president and in order to win it’s going to take all of us showing up on election day. Knowing that can we count on you to vote early for Bernie?\n</div>"},{type:"radiogroup",name:"earlychoice2",visible:false,visibleIf:"{earlychoice1} = 'no'",width:"100%",titleLocation:"hidden",choices:[{value:"yes",text:"YES !"},{value:"no",text:"NO"}],colCount:2}],visible:false,visibleIf:"{earlychoice1} = 'no'"},{type:"panel",name:"planningpanel",elements:[{type:"panel",name:"earlyvotingyes",elements:[{type:"html",name:"question1",html:"<div class=\"myprompt\">Thank you for voting early -- it is going to be critical to Bernie winning in Florida! Based on our records, it looks like you live at {address}. Your nearest early vote location is {Polling_Location} at {Polling_Address}. \n \nYou can also find all locations available in your county and their hours at <a href=\"https://b2020.me/FLvotes\" target=\"_blank\">https://b2020.me/FLvotes</a>\n<br /><br />\nWhen will you go? [LISTEN]</br>\nHow will you get there? Will you drive, walk, take the bus, or get a ride? [LISTEN]</br>\nCan you bring 3 friends? [LISTEN]</br>\nGreat - thank you for being a supporter. We'll be in touch soon!\n</div>"}],visible:false,visibleIf:"{earlychoice1} = 'yes' or {earlychoice2} = 'yes'",title:"Early Voting"},{type:"panel",name:"electionpanel",elements:[{type:"html",name:"question2",html:"<div class=\"myprompt\">\nIt looks like you live at {address}, is that right?  Great! Your polling location is located at {Polling_Location} at {Polling_Address <a href=\"https://b2020.me/FLvotes\" target=\"_blank\">https://b2020.me/FLvotes</a>\n} and it is open from 7 am to 7 pm on March 17th.<br/><br/>\n[MAKE A VOTE PLAN]<br/>\nWhat time of day will you head to the polls?  [LISTEN]<br/>\nHow will you get there? Will you drive, walk, take the bus, or get a ride?  [LISTEN]<br/>\nCan you bring 3 friends? [LISTEN]<br/>\nGreat - thank you for being a supporter. We'll be in touch soon!\n</div>"}],visibleIf:"{earlychoice1} = 'yes' or {earlychoice2} notempty",title:"Voting on Election Day"}],visible:false,visibleIf:"{earlychoice1} = 'yes' or {earlychoice2} notempty"}]}],showNavigationButtons:"none",clearInvisibleValues:"onHidden",questionsOnPageMode:"singlePage"}
+var surveyJSON = {pages:[{name:"Florida CallHub",elements:[{type:"html",name:"Survey Title",html:"<h2>Florida CallHub Script</h2>"},{type:"panel",name:"StartPanel",elements:[{type:"html",name:"Start",html:"<div class=\"myprompt\">“Hi, is {first_name} available?\"<br/>\n...<br/>\nHi {first_name} this is [your name], a volunteer with the Bernie Sanders campaign. \n<br/>\nBernie is running for president to make our economy and our government work for all of us, not just the wealthy few. Are you in for Bernie?”\n</div>"},{type:"radiogroup",name:"support",width:"100%",titleLocation:"hidden",choices:[{value:"supporter",text:"Strong / Lean Supporter"},{value:"undecided",text:"Undecided / Leaning Other"},{value:"nonsupporter",text:"Definitely OTHER Candidate / Moved / Not Home / Busy / Wrong Number"}]}]},{type:"html",name:"nonsupporter",visibleIf:"{support} = 'nonsupporter'",html:"<div class=\"myprompt\">“Alright, thanks for sharing where you're at with me. Have a great day!”\n</div>"},{type:"panel",name:"undecided",elements:[{type:"html",name:"undecidedprompt",html:"<div class=\"myprompt\">Thanks so much for sharing that with me! I hear that you're still making up your mind. I’m making calls for Bernie--\n[TELL YOUR PERSONAL STORY OF WHAT A BERNIE PRESIDENCY WOULD MEAN FOR YOU AND YOUR COMMUNITY].<br/><br/>\nAnd that’s why I support Bernie. I’m curious, what’s something affecting your community or your family right now that you wish a candidate would stand up for?<br/><br/>\n[LISTEN]<br/><br/>\nThank you so much for sharing. This race for the Democratic nomination has turned into a two-person race between Bernie Sanders and Joe Biden. As a voter in Florida, you have the opportunity to shape history by nominating Bernie Sanders to defeat Donald Trump.<br/><br/>\nJoe Biden’s record of supporting bad trade deals, voting for the Iraq War, and efforts to cut social security leaves him vulnerable to Trump's attacks and will not inspire the voter turnout we need to win the White House. On the other hand, Bernie’s record and agenda makes him best positioned to defeat Trump and create a government that represents all people -- not just the billionaires. In poll after poll Bernie beats trump in key battleground states across the country.<br/><br/>\nKnowing this, do you think you will support Bernie in the primary on March 17th?\n</div>"},{type:"radiogroup",name:"support2",visible:false,visibleIf:"{support} = 'undecided'",width:"100%",titleLocation:"hidden",choices:[{value:"yes",text:"YES !"},{value:"no",text:"NO"}],colCount:2}],visible:false,visibleIf:"{support} = 'undecided'"},{type:"panel",name:"nonsupporter2panel",elements:[{type:"html",name:"nonsupporter2",visibleIf:"{support2} = 'no'",html:"<div class=\"myprompt\">“Thank you for your time! Have a great day!”\n</div>"}],visible:false,visibleIf:"{support2} = 'no'"},{type:"panel",name:"supporterpanel",elements:[{type:"html",name:"earlyprompt",html:"<div class=\"myprompt\">Great, I’m so glad to hear that! In Florida, early voting has already started and runs until Saturday, March 14th. Given that you’re a supporter of Bernie’s, can we count on you to cast your ballot early for Senator Sanders by March 14th?</div>"},{type:"radiogroup",name:"earlychoice1",visible:false,visibleIf:"{support} = 'supporter' or {support2} = 'yes'",width:"100%",titleLocation:"hidden",choices:[{value:"yes",text:"YES !"},{value:"no",text:"NO"}],colCount:2}],visible:false,visibleIf:"{support} = 'supporter' or {support2} = 'yes'"},{type:"panel",name:"earlyno",elements:[{type:"html",name:"earlyvotingwhynot",html:"<div class=\"myprompt\">Oh. Why not? [Get answer]. Voting is the first step to electing Bernie as our next president and in order to win it’s going to take all of us showing up on election day. Knowing that can we count on you to vote early for Bernie?\n</div>"},{type:"radiogroup",name:"earlychoice2",visible:false,visibleIf:"{earlychoice1} = 'no'",width:"100%",titleLocation:"hidden",choices:[{value:"yes",text:"YES !"},{value:"no",text:"NO"}],colCount:2}],visible:false,visibleIf:"{earlychoice1} = 'no'"},{type:"panel",name:"planningpanel",elements:[{type:"panel",name:"earlyvotingyes",elements:[{type:"html",name:"question1",html:"<div class=\"myprompt\">Thank you for voting early -- it is going to be critical to Bernie winning in Florida! Based on our records, it looks like you live at {address}. Your nearest early vote location is {Polling_Location} at {Polling_Address}. \n \nYou can also find all locations available in your county and their hours at <a href=\"https://b2020.me/FLvotes\" target=\"_blank\">https://b2020.me/FLvotes</a>\n<br /><br />\nWhen will you go? [LISTEN]</br>\nHow will you get there? Will you drive, walk, take the bus, or get a ride? [LISTEN]</br>\nCan you bring 3 friends? [LISTEN]</br>\nGreat - thank you for being a supporter. We'll be in touch soon!\n</div>"}],visible:false,visibleIf:"{earlychoice1} = 'yes' or {earlychoice2} = 'yes'",title:"Early Voting"},{type:"panel",name:"electionpanel",elements:[{type:"html",name:"question2",html:"<div class=\"myprompt\">\nIt looks like you live at {address}, is that right?  Great! Your polling location is located at {Polling_Location} at {Polling_Address <a href=\"https://b2020.me/FLvotes\" target=\"_blank\">https://b2020.me/FLvotes</a>\n} and it is open from 7 am to 7 pm on March 17th.<br/><br/>\n[MAKE A VOTE PLAN]<br/>\nWhat time of day will you head to the polls?  [LISTEN]<br/>\nHow will you get there? Will you drive, walk, take the bus, or get a ride?  [LISTEN]<br/>\nCan you bring 3 friends? [LISTEN]<br/>\nGreat - thank you for being a supporter. We'll be in touch soon!\n</div>"}],visibleIf:"{earlychoice1} = 'yes' or {earlychoice2} notempty",title:"Voting on Election Day"}],visible:false,visibleIf:"{earlychoice1} = 'yes' or {earlychoice2} notempty"}]}],showNavigationButtons:"none",clearInvisibleValues:"onHidden",questionsOnPageMode:"singlePage"}
 
 function sendDataToServer(survey) {
 }
@@ -146,9 +298,11 @@ $("#surveyContainer").Survey({
 	survey
     .onAfterRenderQuestion
     .add(function (survey, options) {
-		$('html, body').animate({
-        scrollTop: $(".sv_p_root > .sv_row > .sv_p_container > div.sv_q_erbox ~ div > div.sv_row:last-of-type").offset().top - 30
-		}, 300, 'swing');
+		setTimeout(function(){
+			$('html, body').animate({
+			scrollTop: $(".sv_p_root > .sv_row > .sv_p_container > div.sv_q_erbox ~ div > div.sv_row:last-of-type").offset().top - 30
+			}, 250, 'swing');
+		},50);
     });
 //Get the button:
 mybutton = document.getElementById("myBtn");
@@ -197,16 +351,27 @@ function popOut()
 
 	open(window.location.href.split('?')[0]+"?poppedOut=1", document.title, params);
 }
-$(document).ready(function(){
-	if (getUrlParameter("poppedOut")=="1" || ( navigator.userAgent.match(/Android/i)
- || navigator.userAgent.match(/webOS/i)
- || navigator.userAgent.match(/iPhone/i)
- || navigator.userAgent.match(/iPad/i)
- || navigator.userAgent.match(/iPod/i)
- || navigator.userAgent.match(/BlackBerry/i)
- || navigator.userAgent.match(/Windows Phone/i))) $("#popOutBtn").hide();
-	$(this).scrollTop(0);
-});
+	$(document).ready(function(){
+				if (getUrlParameter("poppedOut")=="1" || ( navigator.userAgent.match(/Android/i)
+			 || navigator.userAgent.match(/webOS/i)
+			 || navigator.userAgent.match(/iPhone/i)
+			 || navigator.userAgent.match(/iPad/i)
+			 || navigator.userAgent.match(/iPod/i)
+			 || navigator.userAgent.match(/BlackBerry/i)
+			 || navigator.userAgent.match(/Windows Phone/i))) $("#popOutBtn").hide();
+				$('#dispositiondiv').popup({
+			  background: true,
+			  horizontal: 'center',
+			  vertical: 'top',
+			  keepfocus: false,
+			  autozindex: true,
+			  scrolllock:true,
+			  blur: true,
+			});
+			$(this).scrollTop(0);
+	});
 </script>
+
+
 </body>
 </html>
