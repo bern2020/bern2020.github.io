@@ -86,7 +86,12 @@ a, a:visited{
 .sv_p_root > .sv_row > .sv_p_container > div.sv_q_erbox ~ div > div.sv_row:last-of-type {
     background: #ffffdd;
     border:2px solid orange;
+	animation: blink 0.5s;
+    animation-iteration-count: 3;
+	animation-delay: 0.2s;
 }
+@keyframes blink { 30% { border-color:#ffa ; }  }
+
 #myBtn {
   /*display: none; /* Hidden by default */
   
